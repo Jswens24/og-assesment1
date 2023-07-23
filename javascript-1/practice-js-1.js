@@ -149,7 +149,7 @@ console.log(bigOrSmall([23, 345, 5432, 0, 99, 1234]));
 
 const arrayReverser = (arr) => {
   const reversed = [];
-  for (let i = arr.length - 1; i > 0; i--) {
+  for (let i = arr.length - 1; i >= 0; i--) {
     reversed.push(arr[i])
   }
   return reversed
@@ -198,14 +198,10 @@ let secondFunctionScope = ['global', 'inner', 'outer', 'functional'];
   Invoke the callback passing the first item in the array as an argument.
 */
 
-const blahBlah = (arr) => {
-  const blahArr = []
-  arr.map(el => blahArr.push('blah'))
-  return blahArr
-}
+const blahBlah = (arr) => 'blah';
 
 const firstItem = (arr, cb) => {
-  return cb(arr)
+  return cb(arr[0])
 }
 
 console.log(firstItem([1, 2, 3], blahBlah));
@@ -218,7 +214,27 @@ console.log(firstItem([1, 2, 3], blahBlah));
   Otherwise, invoke the callback passing in false.
 */
 
-//CODE HERE
+const maybeBob = {
+  'age': 43,
+  'pet': 'cat',
+  'name': 'Robert'
+}
+
+const alsoMaybeBob = {
+  'age': 24,
+  'pet': 'dog',
+  'name': 'Bob'
+}
+
+const bobCb = (bool) => bool === true ? true : false;
+
+const isItBob = (obj, cb) => obj.name === 'Bob' ? cb(true) : cb(false);
+
+
+
+
+console.log(isItBob(maybeBob, bobCb));
+console.log(isItBob(alsoMaybeBob, bobCb));
 
 //////////////////PROBLEM 17////////////////////
 /*
@@ -227,7 +243,23 @@ console.log(firstItem([1, 2, 3], blahBlah));
   Then invoke the callback, passing in the doubled array.
 */
 
-//CODE HERE
+const arr1 = [1, 2, 3, 4, 5];
+const arr2 = [20, 30, 40, 50];
+
+const doubleCb = (arr) => `The doubled Arr is: ${arr}`;
+
+
+const giveMeDoubles = (arr, cb) => {
+  const doubledArr = []
+  for (let i = 0; i < arr.length; i++) {
+    doubledArr.push(arr[i] * 2)
+  }
+  return cb(doubledArr)
+};
+
+
+console.log(giveMeDoubles(arr1, doubleCb));
+console.log(giveMeDoubles(arr2, doubleCb));
 
 //////////////////PROBLEM 18////////////////////
 /*
@@ -254,4 +286,19 @@ console.log(firstItem([1, 2, 3], blahBlah));
   }
 */
 
-//CODE HERE
+const carFactory = (make, model, year) => {
+  const car = {
+    'make': make,
+    'model': model,
+    'year': year,
+    'isNew': null
+  }
+
+  year > 2018 ? car.isNew = true : car.isNew = false
+
+  return car
+}
+
+
+console.log(carFactory('Toyota', 'Rav4', 2020));
+console.log(carFactory('Toyota', 'Tacoma', 1998));
